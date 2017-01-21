@@ -44,16 +44,34 @@ public class PlayerController : MonoBehaviour {
             break;
         }
         //Get the horizontal and verticle axis input
-        float v = Input.GetAxis(verticalAxis);
-        
-        
-        player.transform.Rotate(0,0, v * turnSpeed * Time.deltaTime);
+        float v = 0;
+        float theta = 0;
+        if (player.playerState == Player.PlayerState.UNDERWATER)
+        {
+            v = Input.GetAxis(verticalAxis);
 
-        float angle = player.transform.eulerAngles.z;//deg;
-        player.transform.eulerAngles = new Vector3(0, 0, ClampAngle(angle, -85,85));
+
+            player.transform.Rotate(0, 0, v * turnSpeed * Time.deltaTime);
+
+            float angle = player.transform.eulerAngles.z;//deg;
+            player.transform.eulerAngles = new Vector3(0, 0, ClampAngle(angle, -85, 85));
+
+            //Set the players heading toward the input
+            player.heading = new Vector2(Mathf.Cos(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z));
+        }
+        else if(player.playerState == Player.PlayerState.AIRBORNE)
+        {
+
+            Vector2 vel = player.rbody.velocity.normalized;
+            theta = Mathf.Rad2Deg * Mathf.Acos((Vector2.Dot(Vector2.right, vel)));
+            Debug.Log(theta);
+            if (player.rbody.velocity.y < 0)
+                player.transform.rotation = Quaternion.Euler(0, 0, ClampAngle(-theta, -85, 85));
+            else
+                player.transform.rotation = Quaternion.Euler(0, 0, ClampAngle(theta, -85, 85));
+
+        }
         
-        //Set the players heading toward the input
-        player.heading = new Vector2(Mathf.Cos(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z));
     }
     private float ClampAngle(float angle, float min, float max)
     {
