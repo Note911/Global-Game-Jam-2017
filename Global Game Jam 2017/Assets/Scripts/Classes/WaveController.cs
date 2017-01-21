@@ -10,6 +10,7 @@ public class WaveController : MonoBehaviour {
     private float waveSize;
     public float amp = 1;
     public float freq = 200;
+    public float waterDepth = 15.0f;
     GameObject[] waveSections;
     
     public GameObject wave;
@@ -26,7 +27,7 @@ public class WaveController : MonoBehaviour {
             waveSections[i].transform.SetParent(this.transform);
 
             waveSections[i].transform.position = new Vector2((i*waveSize) - (size*waveSize), 0);
-            waveSections[i].transform.localScale = new Vector2(waveSize, 8.0f);
+            waveSections[i].transform.localScale = new Vector2(waveSize, waterDepth);
         }        
     }
 	
@@ -38,7 +39,7 @@ public class WaveController : MonoBehaviour {
         for (int i = 0; i < size*2; i++)
         {
             totalLength += waveSize;
-            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - 1.5f));
+            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - /*offsets the waves down*/ (waterDepth / 2f) - 2.0f));
             waveSections[i].transform.position = offset;
         }
         //Wrap the waves around the screen
