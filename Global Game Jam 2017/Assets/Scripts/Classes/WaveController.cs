@@ -39,7 +39,7 @@ public class WaveController : MonoBehaviour {
         for (int i = 0; i < size*2; i++)
         {
             totalLength += waveSize;
-            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - /*offsets the waves down*/ (waterDepth / 2f) - 2.0f));
+            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - /*offsets the waves down*/ (waterDepth / 4f) - 2.0f));
             waveSections[i].transform.position = offset;
         }
         //Wrap the waves around the screen
