@@ -47,14 +47,14 @@ public class Player : GameEntity {
                 rbody.velocity = new Vector2(Mathf.Sign(rbody.velocity.x) * maxSpeed, rbody.velocity.y);
         }
         //confine to screen
-        if (transform.position.x > screenLimit.x)
+      /* if (transform.position.x > screenLimit.x)
             transform.position = new Vector3(screenLimit.x, transform.position.y, transform.position.z);
         if (transform.position.x < 0)
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
          if (transform.position.y > screenLimit.y)
             transform.position = new Vector3(transform.position.x, screenLimit.y, transform.position.z);
         if (transform.position.y < 0)
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);*/
 
 
         //Flip x

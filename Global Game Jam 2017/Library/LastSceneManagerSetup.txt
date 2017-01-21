@@ -1,8 +1,7 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scenes/Initialize.unity
-=======
-- path: Assets/gameScene_1.unity
->>>>>>> origin/Development
   isLoaded: 1
   isActive: 1
+- path: Assets/Scenes/LevelOne.unity
+  isLoaded: 1
+  isActive: 0
