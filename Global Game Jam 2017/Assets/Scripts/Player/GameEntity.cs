@@ -9,7 +9,7 @@ public class GameEntity : MonoBehaviour {
     public bool facingRight = true;
     protected List<Animation2D> animationList;
     public AnimationController2D animator;
-    protected Rigidbody2D rbody;
+    public Rigidbody2D rbody;
     protected SpriteRenderer renderer;
 
     public float baseMoveSpeed;
