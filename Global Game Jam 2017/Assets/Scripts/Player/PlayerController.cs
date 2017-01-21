@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour {
 
             Vector2 vel = player.rbody.velocity.normalized;
             theta = Mathf.Rad2Deg * Mathf.Acos((Vector2.Dot(Vector2.right, vel)));
-            Debug.Log(theta);
+            
             if (player.rbody.velocity.y < 0)
                 player.transform.rotation = Quaternion.Euler(0, 0, ClampAngle(-theta, -85, 85));
             else
