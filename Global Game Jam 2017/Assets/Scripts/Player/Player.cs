@@ -12,8 +12,9 @@ public class Player : GameEntity {
     public PlayerAnimState playerAnimState = PlayerAnimState.IDLE;
     public PlayerState playerState = PlayerState.UNDERWATER;
 
-    private float stamina;
-    public float maxStamina;
+    public float stamina = 100;
+    public float maxStamina = 100;
+    public float decayRate = 1.0f;
 
     public bool SwimOrGlide = false;
 
@@ -44,6 +45,8 @@ public class Player : GameEntity {
         if(SwimOrGlide) { 
             if (Mathf.Abs(rbody.velocity.x) > maxSpeed) 
                 rbody.velocity = new Vector2(Mathf.Sign(rbody.velocity.x) * maxSpeed, rbody.velocity.y);
+
+            stamina -= decayRate * Time.deltaTime;
         }
         else {
             if (Mathf.Abs(rbody.velocity.x) > maxSpeed * 2)
@@ -103,25 +106,6 @@ public class Player : GameEntity {
         else
             moveSpeed = baseMoveSpeed;
 
-        //rotate to face heading
-        if (heading != Vector2.zero)
-        {
-            float angle = 0;
-            if (facingRight) { 
-                angle = Mathf.Acos(Vector2.Dot(heading.normalized, new Vector2(1,0)));
-                if (heading.y > 0)
-                    transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-                else
-                    transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * -angle);
-            }
-            else { 
-                 angle = Mathf.Acos(Vector2.Dot(heading.normalized, new Vector2(-1,0)));
-                 if (heading.y > 0)
-                    transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * -angle);
-                 else
-                    transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angle);
-            }
-        }
         base.Update();
 	}
 
