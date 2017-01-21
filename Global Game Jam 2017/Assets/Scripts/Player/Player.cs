@@ -46,24 +46,20 @@ public class Player : GameEntity {
        
         //speed limit
         if (SwimOrGlide) {
-            if (Mathf.Abs(rbody.velocity.x) > maxSpeed * 1.5f)
-            { 
+            if (Mathf.Abs(rbody.velocity.x) > maxSpeed * 1.5f && playerState == PlayerState.UNDERWATER)
+            {
                 rbody.velocity = new Vector2(maxSpeed * 1.5f, rbody.velocity.y);
             }
 
             if (playerState == PlayerState.AIRBORNE)
             {
-                rbody.AddForce(Vector2.up * Time.deltaTime * (rbody.gravityScale * 0.25f));
+                rbody.AddForce(Vector2.up * (rbody.gravityScale * 0.25f));
             }
             if(stamina > 0)
                 stamina -= decayRate * Time.deltaTime;
         }
         else {
-            if (Mathf.Abs(rbody.velocity.x) > maxSpeed && playerState == PlayerState.UNDERWATER)
-
-                    rbody.velocity = new Vector2(maxSpeed, rbody.velocity.y);
-                
-
+            rbody.velocity = new Vector2(maxSpeed, rbody.velocity.y);
         }
         
         //Check if we are in the water
