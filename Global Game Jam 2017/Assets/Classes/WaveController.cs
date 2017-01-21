@@ -10,7 +10,7 @@ public class WaveController : MonoBehaviour {
     public float amp = 1;
     public float freq = 200;
     GameObject[] waveSections;
-    public Camera cam;
+    
     public GameObject wave;
     float count = 0;
     void Start ()
@@ -26,21 +26,17 @@ public class WaveController : MonoBehaviour {
 
             waveSections[i].transform.position = new Vector2((i*waveSize)+0.2f-(size*waveSize)/2, 0);
             waveSections[i].transform.localScale = new Vector2(waveSize, 8.0f);
-        }
-        Debug.Log(waveSections[0].transform.position.y);
-        
+        }        
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
         count += Time.deltaTime;
-        
         for (int i = 0; i < size*2; i++)
         {
             Vector2 offset = new Vector2((i*waveSize)+0.2f - (size *waveSize), (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - 1.5f));
             waveSections[i].transform.position = offset;
-          
         }
         
     }
