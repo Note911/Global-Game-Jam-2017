@@ -75,10 +75,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Classes\WaveController.cs" />
     <Compile Include="Assets\Scripts\Animation\Animation2D.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationController2D.cs" />
+    <Compile Include="Assets\Scripts\Classes\WaveController.cs" />
     <Compile Include="Assets\Scripts\Effects\Parallax.cs" />
+    <Compile Include="Assets\Scripts\GUI\Menus\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\GUI\StaminaBar.cs" />
     <Compile Include="Assets\Scripts\Loaders\ContentLoader.cs" />
     <Compile Include="Assets\Scripts\Managers\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
@@ -86,7 +88,6 @@
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TempSpriteManager.cs" />
-    <Compile Include="Assets\Scripts\Menus\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Player\GameEntity.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Assets\Scripts\Tools\Tile Map\TileMapContainer.cs" />
     <Compile Include="Assets\Scripts\Tools\Tile Map\TileMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Tools\Timer.cs" />
+    <Compile Include="Assets\Scripts\Video\CameraFollow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

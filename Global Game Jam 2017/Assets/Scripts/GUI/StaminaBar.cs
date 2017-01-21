@@ -13,6 +13,7 @@ public class StaminaBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.localScale = new Vector2(player.stamina / player.maxStamina, transform.localScale.y);
+        if(transform.localScale.x >= 0)
+            transform.localScale = new Vector2(player.stamina / player.maxStamina, transform.localScale.y);
 	}
 }
