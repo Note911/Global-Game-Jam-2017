@@ -16,8 +16,6 @@ public class Player : GameEntity {
     public float maxStamina = 100;
     public float decayRate = 1.0f;
 
-    float xVel;
-
     public bool SwimOrGlide = false;
 
     public string swimButton;
@@ -43,7 +41,11 @@ public class Player : GameEntity {
 	
 	// Update is called once per frame
 	protected override void Update () {
-       
+        Debug.Log(rbody.velocity);
+        if(playerState == PlayerState.UNDERWATER)
+        {
+            rbody.AddForce(heading * moveSpeed);
+        }
         //speed limit
         if (SwimOrGlide) {
             if (Mathf.Abs(rbody.velocity.x) > maxSpeed * 1.5f && playerState == PlayerState.UNDERWATER)
@@ -58,30 +60,25 @@ public class Player : GameEntity {
             if(stamina > 0)
                 stamina -= decayRate * Time.deltaTime;
         }
-        else {
-            rbody.velocity = new Vector2(maxSpeed, rbody.velocity.y);
+        else if(!SwimOrGlide && playerState == PlayerState.UNDERWATER)
+        {
+            rbody.velocity = new Vector2(Mathf.Lerp(maxSpeed * 1.5f, maxSpeed, 1f), rbody.velocity.y);
         }
-        
+
+
         //Check if we are in the water
-        if (Physics2D.Linecast(transform.position, waterCheck.position, 1 << LayerMask.NameToLayer("Water"))) {
+        if (Physics2D.Linecast(transform.position, waterCheck.position, 1 << LayerMask.NameToLayer("Water")))
+        {
             //Before we change the state to underwater lets check if the player was airborne last frame
             if (playerState == PlayerState.AIRBORNE)
                 rbody.velocity *= 0.2f;
             playerState = PlayerState.UNDERWATER;
         }
         else
+        {
             playerState = PlayerState.AIRBORNE;
-
-
-        //Flip x
-        if (facingRight) { 
-            if (heading.x < -0.001)
-                FlipX();
-        }
-        else {
-            if (heading.x > 0.001)
-                FlipX();
-        }
+            
+        } 
 
         switch (playerState) {
             case (PlayerState.UNDERWATER):
@@ -110,6 +107,7 @@ public class Player : GameEntity {
             if (playerState == PlayerState.UNDERWATER)
                 moveSpeed = baseMoveSpeed;
         }
+        
         base.Update();
 	}
 
