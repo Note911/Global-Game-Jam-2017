@@ -85,6 +85,10 @@
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TempSpriteManager.cs" />
+    <Compile Include="Assets\Scripts\Menus\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Player\GameEntity.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\TempSprite.cs" />
     <Compile Include="Assets\Scripts\Tools\GameControl.cs" />
     <Compile Include="Assets\Scripts\Tools\Tile Map\Cell.cs" />

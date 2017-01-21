@@ -45,12 +45,12 @@ public class ContentLoader : MonoBehaviour {
     void LoadAnimations() {
         //Load aniamtions
         foreach(NamedSprite animatedSprite in animations) {
-            Animation2D anim = new Animation2D(animatedSprite.sprite,( 28/*FPS*/ / 1000 /*ms*/), animatedSprite.priority, animatedSprite.name, false, animatedSprite.loop);
+            Animation2D anim = new Animation2D(animatedSprite.sprite,(1000 /*ms*// 20 /*FPS*/), animatedSprite.priority, animatedSprite.name, false, animatedSprite.loop);
             _resourceManager.GetAnimationManager().AddAnimation(anim);
         }
         //Load Temporary Sprites in the same fasion
         foreach(NamedSprite tempSprite in temporarySprites) {
-            Animation2D anim = new Animation2D(tempSprite.sprite, (28/*FPS*/ / 1000 /*ms*/), tempSprite.priority, tempSprite.name, true, tempSprite.loop);
+            Animation2D anim = new Animation2D(tempSprite.sprite, (1000 /*ms*// 20 /*FPS*/), tempSprite.priority, tempSprite.name, true, tempSprite.loop);
             TempSpriteManager.GetInstance().AddAnimation(anim);
         }
     }
