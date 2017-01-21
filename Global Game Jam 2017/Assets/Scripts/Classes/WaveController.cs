@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class WaveController : MonoBehaviour {
     public int size = 18;
     private float waveSize;
     public float amp = 1;
+    public float maxAmp = 10;
     public float freq = 200;
     public float waterDepth = 15.0f;
     GameObject[] waveSections;
@@ -34,12 +36,17 @@ public class WaveController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        amp += Time.deltaTime / 100.0f;
+
+        if (amp > maxAmp)
+            amp = maxAmp;
         count += Time.deltaTime;
         float totalLength = 0;
         for (int i = 0; i < size*2; i++)
         {
             totalLength += waveSize;
-            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - /*offsets the waves down*/ (waterDepth / 2f) - 2.0f));
+            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - /*offsets the waves down*/ (waterDepth / 2.5f) - 2.0f));
+            //Vector2 offset = new Vector2(waveSections[i].transform.position.x, (float)(Mathf.Sqrt((9.8f * (float)(Math.Tanh(count * ((2.0f * (float)Mathf.PI) / freq))) / ((2.0f * (float)Mathf.PI) / freq))))- /*offsets the waves down*/ (waterDepth / 4f) - 2.0f);
             waveSections[i].transform.position = offset;
         }
         //Wrap the waves around the screen

@@ -84,7 +84,6 @@
     <Compile Include="Assets\Scripts\Loaders\ContentLoader.cs" />
     <Compile Include="Assets\Scripts\Managers\AnimationManager.cs" />
     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\ParallaxManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SpriteManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TempSpriteManager.cs" />

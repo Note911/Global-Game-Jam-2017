@@ -13,13 +13,18 @@ public class CameraFollow : MonoBehaviour {
     public float zSmooth = 8f;		// How smoothly the camera catches up with it's target movement in the z axis.
     public Vector2 maxXAndY;		// The maximum x and y coordinates the camera can have.
     public Vector2 minXAndY;		// The minimum x and y coordinates the camera can have.
-    public float maxZoom;           // The maximum size the camera can have
+    public float maxZoom = 10.0f;           // The maximum size the camera can have
     private float initZoom;         // The initial size the camera has.
     public bool bindToScreen = false;       // If true restricts all follow targets to the screens bounds 
 
     public List<Transform> players;		// Reference to the player's transform.
     private Camera camera;              // Reference to this camera object
 
+
+    public float zoomSpeed = 1;
+    
+   
+    
 
     void Awake() {
         // Setting up the reference.
@@ -35,7 +40,7 @@ public class CameraFollow : MonoBehaviour {
         zoomInMargin = camera.pixelWidth * (marginZoomPercent / 100);
         //Save camera size
         initZoom = camera.orthographicSize;
-
+        
     }
 
 
@@ -66,7 +71,7 @@ public class CameraFollow : MonoBehaviour {
     void FixedUpdate() {
         TrackPlayers();
     }
-
+    
 
     void TrackPlayers() {
         // By default the target x, y and z coordinates of the camera are it's current x, y and z coordinates.
@@ -86,6 +91,8 @@ public class CameraFollow : MonoBehaviour {
                 max = player;
             if (player.position.x < min.position.x)
                 min = player;
+            
+            
         }
         //    //Make sure players arnt fighting over the camera
         //    if (!CheckXMargin(min, xMargin) || !CheckXMargin(max, xMargin)) {
@@ -117,10 +124,11 @@ public class CameraFollow : MonoBehaviour {
                     position.x = 0;
                 else if (position.x >= camera.pixelWidth)
                     position.x = camera.pixelWidth;
-                if (position.y <= 0)
-                    position.y = 0;
+                if (position.y <= 15)
+                    position.y = 15;
                 else if (position.y >= camera.pixelHeight)
                     position.y = camera.pixelHeight;
+                
                 player.transform.position = new Vector3(camera.ScreenToWorldPoint(position).x,camera.ScreenToWorldPoint(position).y,0);
             }
           
@@ -139,7 +147,7 @@ public class CameraFollow : MonoBehaviour {
         else if (!CheckXMargin(min, zoomInMargin) && !CheckXMargin(max, zoomInMargin))
             //Start zooming in
             targetZoom = Mathf.Lerp(camera.orthographicSize, initZoom, zSmooth * Time.deltaTime);
-
+        
         // The target x and y coordinates should not be larger than the maximum or smaller than the minimum.
         targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
         targetY = Mathf.Clamp(targetY, minXAndY.y, maxXAndY.y);
