@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour {
 
+    public Camera cameraRef;
     // Use this for initialization
     public int size = 18;
     private float waveSize;
@@ -24,7 +25,7 @@ public class WaveController : MonoBehaviour {
             waveSections[i].name = "Wave" + i;
             waveSections[i].transform.SetParent(this.transform);
 
-            waveSections[i].transform.position = new Vector2((i*waveSize)+0.2f-(size*waveSize)/2, 0);
+            waveSections[i].transform.position = new Vector2((i*waveSize) - (size*waveSize), 0);
             waveSections[i].transform.localScale = new Vector2(waveSize, 8.0f);
         }        
     }
@@ -33,11 +34,18 @@ public class WaveController : MonoBehaviour {
 	void Update ()
     {
         count += Time.deltaTime;
+        float totalLength = 0;
         for (int i = 0; i < size*2; i++)
         {
-            Vector2 offset = new Vector2((i*waveSize)+0.2f - (size *waveSize), (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - 1.5f));
+            totalLength += waveSize;
+            Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - 1.5f));
             waveSections[i].transform.position = offset;
         }
-        
+        //Wrap the waves around the screen
+        for (int i = 0;  i < waveSections.Length; ++i) {
+            if(waveSections[i].transform.position.x < cameraRef.ScreenToWorldPoint(Vector3.zero).x) {
+                waveSections[i].transform.position = new Vector3(waveSections[i].transform.position.x + totalLength, waveSections[i].transform.position.y, waveSections[i].transform.position.z);
+            }
+        } 
     }
 }
