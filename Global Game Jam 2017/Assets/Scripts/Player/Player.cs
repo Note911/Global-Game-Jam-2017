@@ -7,9 +7,10 @@ public class Player : GameEntity {
     //Water check transform for raycasting
     public Transform waterCheck;
     public Transform wakeCheck;
-
+    public GameObject winScreen;
     public GameObject scoreManager;
-    
+    public AudioSource audioSource;
+    public AudioSource splashAudio;
     public GameObject splash, splash2, splash3, splash4, wake;
     public TrailRenderer trailRenderer;
     public InspirationalMessager inspire;
@@ -50,17 +51,21 @@ public class Player : GameEntity {
     protected override void Start () {
         
         base.Start();
+        audioSource = GetComponent<AudioSource>();
         GenerateAnimationList();
         animator = new AnimationController2D(renderer, animationList);
         animator.ChangeAnimation((int)PlayerAnimState.IDLE);
         stamina = maxStamina;
         trailRenderer.sortingOrder = 4;
 	}
-	
-	// Update is called once per frame
-	protected override void Update () {
 
-        if(playerState == PlayerState.UNDERWATER)
+    // Update is called once per frame
+    protected override void Update() {
+        if (stamina <= 0)
+        {
+            winScreen.SetActive(true);
+        }
+        if (playerState == PlayerState.UNDERWATER)
         {
             rbody.AddForce(heading * moveSpeed);
         }
@@ -79,7 +84,7 @@ public class Player : GameEntity {
             if (stamina == 0.0f)
                 SwimOrGlide = false;
         }
-        else if(!SwimOrGlide && playerState == PlayerState.UNDERWATER)
+        else if (!SwimOrGlide && playerState == PlayerState.UNDERWATER)
         {
             rbody.velocity = new Vector2(Mathf.Lerp(maxSpeed * 1.5f, maxSpeed, 1f), rbody.velocity.y);
         }
@@ -97,7 +102,7 @@ public class Player : GameEntity {
             if (playerState == PlayerState.UNDERWATER)
                 Breech();
             playerState = PlayerState.AIRBORNE;
-            
+
         }
 
         switch (playerState) {
@@ -133,7 +138,7 @@ public class Player : GameEntity {
         //Are we swimming fast?!  flagged from player controller
         if (SwimOrGlide)
         {
-            if(playerState == PlayerState.UNDERWATER)
+            if (playerState == PlayerState.UNDERWATER)
                 moveSpeed = baseMoveSpeed * 1.5f;
         }
         else
@@ -144,15 +149,31 @@ public class Player : GameEntity {
 
         //wake messages
         if (wakeTimer > 2.0f)
+        {
             inspire.WakeMessages(4);
+            audioSource.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("godlike");
+            audioSource.Play();
+        }
         else if (wakeTimer > 1.0f)
+        {
             inspire.WakeMessages(3);
+            audioSource.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("dominating");
+            audioSource.Play();
+        }
         else if (wakeTimer > 0.5f)
+        {
+            audioSource.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("excellent");
+            audioSource.Play();
             inspire.WakeMessages(2);
+        }
         else if (wakeTimer > 0.1f)
+        {
             inspire.WakeMessages(1);
+        }
         else if (wakeTimer > 0.05f)
+        { 
             inspire.WakeMessages(0);
+        }
         
 
         base.Update();
@@ -168,6 +189,8 @@ public class Player : GameEntity {
 
     private void Dive() {
         //The point of our player is going to be our reference for the point of impact here
+        splashAudio.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("water_splash");
+        audioSource.Play();
         Vector2 pointOfImpact = transform.position;
         //We are going to find another point on the wave to get a line between the one just under us and one behind to get the angle of the water
         //If we are traveling right the offset will be negitive and vice versa
@@ -190,7 +213,6 @@ public class Player : GameEntity {
 
        // Debug.Log("Impact Angle: " + impactAngle);
         if(impactAngle < 20.0f) {
-            inspire.CustomMessage("Get Wrekt!", Color.red, new Vector2(scoreManager.GetComponent<Text>().transform.position.x , scoreManager.GetComponent<Text>().transform.position.y - 25));
             scoreManager.GetComponent<ScoreManager>().ChangeCurrentScoreByMultiplier(0.0f);
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
             Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
@@ -211,6 +233,9 @@ public class Player : GameEntity {
             Destroy(GameObject.Instantiate(splash, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
             inspire.GreatDiveMessages();
             rbody.velocity = heading.normalized * maxSpeed;
+
+            audioSource.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("impressive");
+            audioSource.Play();
 
         }
     }
