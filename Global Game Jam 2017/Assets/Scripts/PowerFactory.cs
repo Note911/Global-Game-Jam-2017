@@ -32,7 +32,7 @@ public class PowerFactory : MonoBehaviour {
             newPowerUp.GetComponent<PowerUp>().player = player;
             newPowerUp.GetComponent<PowerUp>().particle = particle;
             newPowerUp.GetComponent<PowerUp>().powerFactory = this;
-            newPowerUp.GetComponent<PowerUp>().audioSource = newPowerUp.GetComponent<AudioSource>();
+           
             newPowerUp.SetActive(false);
             inactiveList.Add(newPowerUp);
         }

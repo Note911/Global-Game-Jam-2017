@@ -7,7 +7,9 @@ public class PowerUp : MonoBehaviour {
     public Player player;
     public PowerFactory powerFactory;
     public ParticleSystem particle;
-    public AudioSource audioSource;
+    public GameObject audioSourceObj;
+    public AnimationController2D animator;
+    public Animation2D sprite;
     
     void OnEnable()
     {
@@ -23,17 +25,23 @@ public class PowerUp : MonoBehaviour {
     {
         CancelInvoke();
     }
+    void Awake() {
+         GetComponent<PowerUp>().sprite = ResourceManager.GetInstance().GetAnimationManager().GetAnimation("PowerUp");
+         GetComponent<PowerUp>().animator = new AnimationController2D(GetComponent<SpriteRenderer>(), GetComponent<PowerUp>().sprite);
+    }
+
     // Update is called once per frame
     void Update () {
-		
+        animator.Update();
+        transform.Rotate(0, 0, 10);
 	}
     void OnTriggerEnter2D(Collider2D other) {
+        Destroy(GameObject.Instantiate(audioSourceObj), 1.0f);
+
         player.stamina ++;
         if (player.stamina > 100.0f)
             player.stamina = 100.0f;
         ParticleSystem ps = Instantiate(particle);
-        audioSource.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("powerup");
-        audioSource.Play();
         ps.transform.position = transform.position;
         ps.Play();
         gameObject.SetActive(false);

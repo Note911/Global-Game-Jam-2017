@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class SplashScreen : MonoBehaviour {
@@ -16,6 +16,6 @@ public class SplashScreen : MonoBehaviour {
 	}
     
     void LoadMainMenu() {
-        EditorSceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 }

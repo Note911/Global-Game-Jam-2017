@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameControl : MonoBehaviour {
@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour {
         loader.LoadContent();
         if (loader.HasLoaded()) {
             Destroy(loader.gameObject);
-            EditorSceneManager.LoadScene("GlobalGameJamSplash");
+            SceneManager.LoadScene("GlobalGameJamSplash");
         }
     }
 	

@@ -1,0 +1,129 @@
+Initialize engine version: 5.5.0f3 (38b4efef76f0)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics 5500 (ID=0x1616)
+    Vendor:   Intel
+    VRAM:     2111 MB
+    Driver:   20.19.15.4531
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.399 seconds
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\keesm_000\Documents\GitHub\Global-Game-Jam-2017\Global Game Jam 2017\SplishSplash_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 4800x1350 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 3.303200 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.289521 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 315.
+Total: 1.960794 ms (FindLiveObjects: 0.038916 ms CreateObjectMapping: 0.030791 ms MarkObjects: 1.884244 ms  DeleteObjects: 0.005987 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.300640 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 361.
+Total: 0.275409 ms (FindLiveObjects: 0.041054 ms CreateObjectMapping: 0.022238 ms MarkObjects: 0.186884 ms  DeleteObjects: 0.024376 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.627928 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 480.
+Total: 0.368637 ms (FindLiveObjects: 0.046186 ms CreateObjectMapping: 0.020099 ms MarkObjects: 0.282679 ms  DeleteObjects: 0.019244 ms)
+
+200
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Idle
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Swim
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Glide
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Fall
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.682813 ms
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 480.
+Total: 0.565786 ms (FindLiveObjects: 0.052601 ms CreateObjectMapping: 0.038488 ms MarkObjects: 0.467426 ms  DeleteObjects: 0.006414 ms)
+
+200
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Idle
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Swim
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Glide
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Asking for Animation.... Fall
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Spawning
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 9fc -> priority: 1 
