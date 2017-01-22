@@ -5,11 +5,11 @@ using UnityEngine;
 public class StaminaBar : MonoBehaviour {
 
     public Player player;
-
+    public Camera cam;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
