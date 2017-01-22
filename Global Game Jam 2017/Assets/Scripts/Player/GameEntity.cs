@@ -33,7 +33,7 @@ public class GameEntity : MonoBehaviour {
 	// Update is called once per frame
 	protected virtual void Update () {
         animator.Update();
-        rbody.AddForce(heading);
+        
 	}
 
     public virtual void FlipX()
