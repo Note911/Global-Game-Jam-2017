@@ -17,6 +17,8 @@ public class CameraFollow : MonoBehaviour {
     private float initZoom;         // The initial size the camera has.
     public bool bindToScreen = false;       // If true restricts all follow targets to the screens bounds 
 
+    public float xOffset = 100.0f;
+
     public Player player;		// Reference to the player's transform.
     private Camera camera;              // Reference to this camera object
 
@@ -151,7 +153,7 @@ public class CameraFollow : MonoBehaviour {
         targetZoom = Mathf.Clamp(targetZoom, initZoom, maxZoom);
 
         // Set the camera's position to the target position with the same z component.
-        transform.position = new Vector3(targetX, targetY, transform.position.z);
+        transform.position = new Vector3(targetX + xOffset, targetY, transform.position.z);
 
         //Set the camera's zoom to the target zoom
         camera.orthographicSize = targetZoom;
