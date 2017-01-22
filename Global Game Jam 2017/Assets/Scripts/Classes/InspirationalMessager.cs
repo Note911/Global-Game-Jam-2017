@@ -66,7 +66,7 @@ public class InspirationalMessager : MonoBehaviour {
                  textBox.text = "Many Score!";
                 break;
             case (3):
-                textBox.text = "Egg-Salad";
+                textBox.text = "So Skill.";
                 break;
         }
         Invoke("DisableText", 0.3f);
@@ -94,7 +94,7 @@ public class InspirationalMessager : MonoBehaviour {
                 textBox.text = "Dank!";
                 break;
             case (5):
-                textBox.text = "So Skill!";
+                textBox.text = "Egg-Salad!";
                 break;
         }
         Invoke("DisableText", 0.3f);

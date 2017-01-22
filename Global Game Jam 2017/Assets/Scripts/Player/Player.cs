@@ -57,8 +57,6 @@ public class Player : GameEntity {
 	// Update is called once per frame
 	protected override void Update () {
 
-        Debug.Log(wakeTimer);
-
         if(playerState == PlayerState.UNDERWATER)
         {
             rbody.AddForce(heading * moveSpeed);
@@ -75,6 +73,8 @@ public class Player : GameEntity {
 
             stamina -= decayRate * Time.deltaTime;
             Mathf.Clamp(stamina, 0.0f, maxStamina);
+            if (stamina == 0.0f)
+                SwimOrGlide = false;
         }
         else if(!SwimOrGlide && playerState == PlayerState.UNDERWATER)
         {
@@ -180,11 +180,6 @@ public class Player : GameEntity {
         //Lets convert to degrees for ease of use
         impactAngle *= Mathf.Rad2Deg;
         impactAngle -= 90.0f;
-
-<<<<<<< HEAD
-=======
-       // Debug.Log("Impact Angle: " + impactAngle);
->>>>>>> refs/remotes/origin/Topher-Branch-Development
 
         if(impactAngle < 20.0f) {
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
