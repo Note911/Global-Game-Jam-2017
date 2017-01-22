@@ -57,16 +57,15 @@ public class InspirationalMessager : MonoBehaviour {
         int i = Random.Range(0, 4);
         switch (i) {
             case (0):
-                textBox.text = "Not bad";
+                textBox.text = "Not bad.";
                 break;
             case (1):
-                textBox.text = "Ok!";
+                textBox.text = "Ok.";
                 break;
             case (2):
-                 textBox.text = "Think!";
+                 textBox.text = "Well you tried.";
                 break;
             case (3):
-<<<<<<< HEAD
                 textBox.text = "Satasfactory.";
                 break;
             case (4):
@@ -74,9 +73,6 @@ public class InspirationalMessager : MonoBehaviour {
                 break;
             case (5):
                 textBox.text = "C-";
-=======
-                textBox.text = "So Skill.";
->>>>>>> refs/remotes/origin/Development
                 break;
         }
         Invoke("DisableText", 0.3f);
