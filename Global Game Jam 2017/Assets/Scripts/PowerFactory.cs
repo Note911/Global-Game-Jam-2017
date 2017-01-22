@@ -21,7 +21,7 @@ public class PowerFactory : MonoBehaviour {
         powerupList = new List<PowerUp>();
 
 
-        SpawnSineWave();
+        SpawnSineWave(2.5f, 2.0f);
 	}
 	
 	// Update is called once per frame
@@ -39,31 +39,10 @@ public class PowerFactory : MonoBehaviour {
         return new Vector2(Random.Range(cam.transform.position.x + 125.0f, cam.transform.position.x + 175.0f), Random.Range(-1.5f, 12.0f));
     }
 
-    void SpawnScatter()
-    {
-
-    }
-
-    void SpawnSineWave()
-    {
-        for (int i = 0; i < 10; ++i)
-        {
-            powerupList.Add(Instantiate(PUType));
-            powerupList[i].transform.position = new Vector2(2.5f * i + 125.0f, Mathf.Sin(2f * i));
-
-        }
-
-
-
-    }
-    void SpawnTanWave()
-    {
-
-    }
-    void SpawnLoop()
+    void SpawnScatter(int numPowers)
     {
         //Instead of Instantiating- Take 15 unused objects
-        for (int i = 0; i < 15; ++i)
+        for (int i = 0; i < ; ++i)
         {
             powerupList.Add(Instantiate(PUType));
         }
@@ -81,5 +60,26 @@ public class PowerFactory : MonoBehaviour {
                 }
             }
         }
+    }
+
+    void SpawnSineWave(float a, float f)
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            powerupList.Add(Instantiate(PUType));
+            powerupList[i].transform.position = new Vector2(a * i + 125.0f, Mathf.Sin(f * i));
+
+        }
+
+
+
+    }
+    void SpawnTanWave()
+    {
+
+    }
+    void SpawnLoop()
+    {
+       
     }
 }

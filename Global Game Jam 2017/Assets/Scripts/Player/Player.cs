@@ -181,10 +181,9 @@ public class Player : GameEntity {
         impactAngle *= Mathf.Rad2Deg;
         impactAngle -= 90.0f;
 
-<<<<<<< HEAD
-=======
+
        // Debug.Log("Impact Angle: " + impactAngle);
->>>>>>> refs/remotes/origin/Topher-Branch-Development
+
 
         if(impactAngle < 20.0f) {
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
