@@ -6,9 +6,9 @@ public class ScoreManager : MonoBehaviour {
 
     public Player player;
 
-    private int totalScore;
-    private int currentScore;
-    private int multiplier;
+    private float totalScore;
+    private float currentScore;
+    private float multiplier;
     float timer;
 
     public Text totalScoreText;
@@ -59,19 +59,35 @@ public class ScoreManager : MonoBehaviour {
         {
             AddToTotal(currentScore);
             currentScore = 0;
+            multiplier = 1;
         }
         currentScoreText.text = sCurrentScore + sMarkiplier;
     }
-    void AddToTotal(int _currentScore)
+    void AddToTotal(float _currentScore)
     {
         totalScore += _currentScore * multiplier;
-        totalScoreText.text = "Score: " + totalScore;
+        totalScoreText.text = "Score: " + (int)totalScore;
 
     }
 
-    void ScoreTick()
+    public void ScoreTick()
     {
         currentScore += 10;
         sCurrentScore = "" + currentScore;
+    }
+
+    public void AddMultiplier(float _multiplier)
+    {
+        multiplier += _multiplier;
+    }
+
+    public void AddStaticScore(int num)
+    {
+        currentScore += num;
+    }
+
+    public void ChangeCurrentScoreByMultiplier(float _m)
+    {
+        currentScore *= _m;
     }
 }

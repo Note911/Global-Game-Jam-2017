@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : GameEntity {
     //Water check transform for raycasting
     public Transform waterCheck;
     public Transform wakeCheck;
 
+    public GameObject scoreManager;
+    
     public GameObject splash, splash2, splash3, splash4, wake;
     public TrailRenderer trailRenderer;
     public InspirationalMessager inspire;
@@ -112,7 +115,9 @@ public class Player : GameEntity {
                     if (rbody.velocity.x > 20.0f && rbody.velocity.y < 2.5 && rbody.velocity.y > -2.5)
                     {
                         Destroy(GameObject.Instantiate(wake, wakeCheck.position, Quaternion.Euler(0, 0, 0)), 0.5f);
+
                         wakeTimer += Time.deltaTime;
+                        scoreManager.GetComponent<ScoreManager>().AddStaticScore((int)(wakeTimer * 100));
                     }
                 }
                 else
@@ -148,6 +153,8 @@ public class Player : GameEntity {
             inspire.WakeMessages(1);
         else if (wakeTimer > 0.05f)
             inspire.WakeMessages(0);
+        
+
         base.Update();
 	}
 
@@ -183,9 +190,12 @@ public class Player : GameEntity {
 
        // Debug.Log("Impact Angle: " + impactAngle);
         if(impactAngle < 20.0f) {
+            inspire.CustomMessage("Get Wrekt!", Color.red, new Vector2(scoreManager.GetComponent<Text>().transform.position.x , scoreManager.GetComponent<Text>().transform.position.y - 25));
+            scoreManager.GetComponent<ScoreManager>().ChangeCurrentScoreByMultiplier(0.0f);
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
             Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
             inspire.BadDiveMessages();
+            
         }
         else if(impactAngle >= 20.0f && impactAngle < 35.0f) {
              Destroy(GameObject.Instantiate(splash2, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
@@ -197,9 +207,11 @@ public class Player : GameEntity {
             rbody.velocity = heading.normalized * breechVelocity;
         }
         else {
+            scoreManager.GetComponent<ScoreManager>().AddMultiplier(2.0f);
             Destroy(GameObject.Instantiate(splash, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
             inspire.GreatDiveMessages();
             rbody.velocity = heading.normalized * maxSpeed;
+
         }
     }
 
