@@ -72,13 +72,13 @@ public class Player : GameEntity {
         {
             //Before we change the state to underwater lets check if the player was airborne last frame
             if (playerState == PlayerState.AIRBORNE)
-<<<<<<< HEAD
+
                 Dive();
-=======
+
             {
                 rbody.velocity *= 0.2f;
             }
->>>>>>> refs/remotes/origin/Development
+
             playerState = PlayerState.UNDERWATER;
         }
         else
