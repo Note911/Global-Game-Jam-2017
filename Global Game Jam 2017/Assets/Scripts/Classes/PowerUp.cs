@@ -7,6 +7,7 @@ public class PowerUp : MonoBehaviour {
     public Player player;
     public PowerFactory powerFactory;
     public ParticleSystem particle;
+    public AudioSource audioSource;
     
     void OnEnable()
     {
@@ -31,6 +32,8 @@ public class PowerUp : MonoBehaviour {
         if (player.stamina > 100.0f)
             player.stamina = 100.0f;
         ParticleSystem ps = Instantiate(particle);
+        audioSource.clip = ResourceManager.GetInstance().GetAudioManager().GetAudioClip("powerup");
+        audioSource.Play();
         ps.transform.position = transform.position;
         ps.Play();
         gameObject.SetActive(false);

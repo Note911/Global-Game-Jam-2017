@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour {
     private float currentScore;
     private float multiplier;
     float timer;
-
+    public bool alive;
     public Text totalScoreText;
     public Text currentScoreText;
     private string emptyText = "";
@@ -22,6 +22,7 @@ public class ScoreManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        alive = true;
         timer = 0;
         totalScore = 0;
         currentScore = 0;
@@ -37,31 +38,39 @@ public class ScoreManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //Check if there is a worthy markiplier
-        if (multiplier > 1)
-            sMarkiplier = " x " + multiplier;
-        else
-            sMarkiplier = emptyText;
-        //Score timer tick
+        if(alive)
+        {
+            //Check if there is a worthy markiplier
+            if (multiplier > 1)
+                sMarkiplier = " x " + multiplier;
+            else
+                sMarkiplier = emptyText;
+            //Score timer tick
         
 
-        //temp- when breached start scoring.
-        if (player.playerState == Player.PlayerState.AIRBORNE)
-        {
-            timer += Time.deltaTime;
-            if (timer > 0.33f)
-            { 
-                ScoreTick();
-                timer = 0;
+            //temp- when breached start scoring.
+            if (player.playerState == Player.PlayerState.AIRBORNE)
+            {
+                timer += Time.deltaTime;
+                if (timer > 0.33f)
+                { 
+                    ScoreTick();
+                    timer = 0;
+                }
             }
+            if(player.playerState == Player.PlayerState.UNDERWATER)
+            {
+                AddToTotal(currentScore);
+                currentScore = 0;
+                multiplier = 1;
+            }
+            currentScoreText.text = sCurrentScore + sMarkiplier;
         }
-        if(player.playerState == Player.PlayerState.UNDERWATER)
+        else
         {
-            AddToTotal(currentScore);
-            currentScore = 0;
-            multiplier = 1;
+            currentScoreText.text = "";
+            totalScoreText.text = "";
         }
-        currentScoreText.text = sCurrentScore + sMarkiplier;
     }
     void AddToTotal(float _currentScore)
     {
