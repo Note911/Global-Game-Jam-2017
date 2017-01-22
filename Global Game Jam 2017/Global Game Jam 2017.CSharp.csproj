@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Animation\Animation2D.cs" />
     <Compile Include="Assets\Scripts\Animation\AnimationController2D.cs" />
+    <Compile Include="Assets\Scripts\Classes\InspirationalMessager.cs" />
     <Compile Include="Assets\Scripts\Classes\PowerUp.cs" />
     <Compile Include="Assets\Scripts\Classes\WaveController.cs" />
     <Compile Include="Assets\Scripts\Effects\Parallax.cs" />
