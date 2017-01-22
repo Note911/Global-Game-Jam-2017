@@ -181,13 +181,7 @@ public class Player : GameEntity {
         impactAngle *= Mathf.Rad2Deg;
         impactAngle -= 90.0f;
 
-<<<<<<< HEAD
-
        // Debug.Log("Impact Angle: " + impactAngle);
-
-
-=======
->>>>>>> e7c384e7e0ced7719113132dd93d9b109198f714
         if(impactAngle < 20.0f) {
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
             Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
