@@ -5,12 +5,19 @@ using UnityEngine;
 public class Player : GameEntity {
     //Water check transform for raycasting
     public Transform waterCheck;
+    public Transform wakeCheck;
+
+    public GameObject splash, splash2, splash3, splash4, wake;
+    public TrailRenderer trailRenderer;
+    public InspirationalMessager inspire;
+
+    private float wakeTimer;
 
     public enum PlayerAnimState { IDLE, SWIM, GLIDE, FALL }
     public enum PlayerState { UNDERWATER, AIRBORNE }
 
     public PlayerAnimState playerAnimState = PlayerAnimState.IDLE;
-    public PlayerState playerState = PlayerState.UNDERWATER;
+    public PlayerState playerState = PlayerState.AIRBORNE;
 
     public float stamina = 100;
     public float maxStamina = 100;
@@ -38,15 +45,18 @@ public class Player : GameEntity {
 
     // Use this for initialization
     protected override void Start () {
+        
         base.Start();
         GenerateAnimationList();
         animator = new AnimationController2D(renderer, animationList);
         animator.ChangeAnimation((int)PlayerAnimState.IDLE);
         stamina = maxStamina;
+        trailRenderer.sortingOrder = 4;
 	}
 	
 	// Update is called once per frame
 	protected override void Update () {
+
         if(playerState == PlayerState.UNDERWATER)
         {
             rbody.AddForce(heading * moveSpeed);
@@ -63,12 +73,13 @@ public class Player : GameEntity {
 
             stamina -= decayRate * Time.deltaTime;
             Mathf.Clamp(stamina, 0.0f, maxStamina);
+            if (stamina == 0.0f)
+                SwimOrGlide = false;
         }
         else if(!SwimOrGlide && playerState == PlayerState.UNDERWATER)
         {
             rbody.velocity = new Vector2(Mathf.Lerp(maxSpeed * 1.5f, maxSpeed, 1f), rbody.velocity.y);
         }
-
 
         //Check if we are in the water
         if (Physics2D.Linecast(transform.position, waterCheck.position, 1 << LayerMask.NameToLayer("Water")))
@@ -84,17 +95,29 @@ public class Player : GameEntity {
                 Breech();
             playerState = PlayerState.AIRBORNE;
             
-        } 
+        }
 
         switch (playerState) {
             case (PlayerState.UNDERWATER):
+                wakeTimer = 0;
                 if (SwimOrGlide)
                     playerAnimState = PlayerAnimState.SWIM;
                 else
                     playerAnimState = PlayerAnimState.IDLE;
                 break;
             case (PlayerState.AIRBORNE):
-                 if (SwimOrGlide)
+                Vector3 wakePos = new Vector3(wakeCheck.position.x - 4.0f, wakeCheck.position.y, wakeCheck.position.z);
+                if (Physics2D.Linecast(new Vector3(transform.position.x, transform.position.y - 2.0f, transform.position.z), wakePos, 1 << LayerMask.NameToLayer("Water")))
+                {
+                    if (rbody.velocity.x > 20.0f && rbody.velocity.y < 2.5 && rbody.velocity.y > -2.5)
+                    {
+                        Destroy(GameObject.Instantiate(wake, wakeCheck.position, Quaternion.Euler(0, 0, 0)), 0.5f);
+                        wakeTimer += Time.deltaTime;
+                    }
+                }
+                else
+                    wakeTimer = 0;
+                if (SwimOrGlide)
                     playerAnimState = PlayerAnimState.GLIDE;
                 else
                     playerAnimState = PlayerAnimState.FALL;
@@ -113,7 +136,18 @@ public class Player : GameEntity {
             if (playerState == PlayerState.UNDERWATER)
                 moveSpeed = baseMoveSpeed;
         }
-        
+
+        //wake messages
+        if (wakeTimer > 2.0f)
+            inspire.WakeMessages(4);
+        else if (wakeTimer > 1.0f)
+            inspire.WakeMessages(3);
+        else if (wakeTimer > 0.5f)
+            inspire.WakeMessages(2);
+        else if (wakeTimer > 0.1f)
+            inspire.WakeMessages(1);
+        else if (wakeTimer > 0.05f)
+            inspire.WakeMessages(0);
         base.Update();
 	}
 
@@ -147,22 +181,36 @@ public class Player : GameEntity {
         impactAngle *= Mathf.Rad2Deg;
         impactAngle -= 90.0f;
 
-        Debug.Log("Impact Angle: " + impactAngle);
-
         if(impactAngle < 20.0f) {
-            rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * breechVelocity;
-            rbody.AddForce(Vector2.up * 20.0f);
+            rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
+            Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
+            inspire.BadDiveMessages();
         }
-        else if(impactAngle >= 20.0f && impactAngle < 75.0f) {
-            heading.y -= 1.0f;
-            rbody.velocity = heading.normalized * breechVelocity * 0.4f;
+        else if(impactAngle >= 20.0f && impactAngle < 35.0f) {
+             Destroy(GameObject.Instantiate(splash2, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
+             rbody.velocity = heading.normalized * breechVelocity * 0.9f;
+        }
+        else if(impactAngle >= 35.0f && impactAngle < 75.0f) {
+            Destroy(GameObject.Instantiate(splash, transform.position, Quaternion.Euler(0, 0, impactAngle)), 3.0f);
+            inspire.DiveMessages();
+            rbody.velocity = heading.normalized * breechVelocity;
         }
         else {
-            rbody.velocity = heading.normalized * breechVelocity * 0.7f;
+            Destroy(GameObject.Instantiate(splash, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
+            inspire.GreatDiveMessages();
+            rbody.velocity = heading.normalized * maxSpeed;
         }
     }
 
     private void Breech() {
+        float breechAngle = Mathf.Rad2Deg * Mathf.Acos(Vector2.Dot(heading, Vector2.right));
+
+        if(rbody.velocity.magnitude > maxSpeed - 2.0f)
+            Destroy(GameObject.Instantiate(splash4, transform.position, Quaternion.Euler(0, 0, breechAngle)), 3.0f);
+        else
+            Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
         breechVelocity = rbody.velocity.magnitude;
     }
+
+    
 }
