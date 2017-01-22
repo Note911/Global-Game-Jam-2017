@@ -27,13 +27,13 @@ public class GameEntity : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
         moveSpeed = baseMoveSpeed;
-        heading = new Vector2(0, 0);
+        heading = new Vector2(1, 0);
 	}
 	
 	// Update is called once per frame
 	protected virtual void Update () {
         animator.Update();
-        rbody.AddForce(heading * moveSpeed);
+        
 	}
 
     public virtual void FlipX()

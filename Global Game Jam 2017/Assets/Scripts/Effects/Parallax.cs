@@ -20,7 +20,7 @@ public class Parallax : MonoBehaviour {
         image2.AddComponent<SpriteRenderer>();
         image2.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
         image2.GetComponent<SpriteRenderer>().sprite = sprite;
-        image2.transform.position = new Vector3 (anchor.position.x - offset, anchor.position.y, anchor.position.z);
+        image2.transform.position = new Vector3 (anchor.position.x - offset, anchor.position.y, 11);
         image2.transform.parent = cameraRef.transform;
         startPos = anchor.position;
     }               

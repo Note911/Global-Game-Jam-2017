@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour {
     public string verticalAxis;
 
     
-    public float turnSpeed = 200;
     // Use this for initialization
     void Start () {
         
@@ -18,6 +17,8 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+         //Set the players heading toward the input
+        player.heading = new Vector2(Mathf.Cos(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z));
         switch(player.playerState) {
             case (Player.PlayerState.AIRBORNE):
                 //Set gravity scale to full
@@ -45,32 +46,61 @@ public class PlayerController : MonoBehaviour {
         }
         //Get the horizontal and verticle axis input
         float v = 0;
+        v = Input.GetAxis(verticalAxis);
         float theta = 0;
         if (player.playerState == Player.PlayerState.UNDERWATER)
         {
-            v = Input.GetAxis(verticalAxis);
+            //Redirect the momentum based on heading
+            player.rbody.velocity = player.heading.normalized * player.rbody.velocity.magnitude;
 
-
-            player.transform.Rotate(0, 0, v * turnSpeed * Time.deltaTime);
+           
+            player.transform.Rotate(0, 0, v * player.turnSpeed * Time.deltaTime);
 
             float angle = player.transform.eulerAngles.z;//deg;
-            player.transform.eulerAngles = new Vector3(0, 0, ClampAngle(angle, -85, 85));
+            //player.transform.eulerAngles = new Vector3(0, 0, ClampAngle(angle, -85, 85));
 
-            //Set the players heading toward the input
-            player.heading = new Vector2(Mathf.Cos(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z));
+            if (v == 0){
+                player.transform.Rotate(0, 0, (player.turnSpeed * 0.5f) * Time.deltaTime);
+            }
+
+           
         }
         else if(player.playerState == Player.PlayerState.AIRBORNE)
         {
+            player.breechVelocity -= 0.1f * Time.deltaTime;
+            Mathf.Clamp(player.breechVelocity, 0.0f, player.breechVelocity);
+            if(v != 0 && player.SwimOrGlide) {
+                //Get the angle between the right vector and the heading
+                float headingAngle = Mathf.Rad2Deg * Mathf.Acos(Vector2.Dot(player.heading.normalized, Vector2.right));
+                        
+                if(headingAngle < 90.0f) {
+                    float liftPercentage = 1.0f - (headingAngle / 90.0f);
+                    player.transform.Rotate(0, 0, v * (player.turnSpeed) * Time.deltaTime);             
+                    player.rbody.velocity = player.heading.normalized * (player.breechVelocity * liftPercentage);
 
-            Vector2 vel = player.rbody.velocity.normalized;
-            theta = Mathf.Rad2Deg * Mathf.Acos((Vector2.Dot(Vector2.right, vel)));
-            Debug.Log(theta);
-            if (player.rbody.velocity.y < 0)
-                player.transform.rotation = Quaternion.Euler(0, 0, ClampAngle(-theta, -85, 85));
-            else
-                player.transform.rotation = Quaternion.Euler(0, 0, ClampAngle(theta, -85, 85));
+                    Vector2 lift = Vector2.up * player.glideUpForce * liftPercentage;
+                    Debug.Log(player.rbody.velocity.magnitude);
+                    Debug.Log(player.rbody.velocity);
+                    player.rbody.AddForce(lift);
+                }
+                else if(headingAngle > 90.0f && headingAngle < 270){
+                    player.transform.Rotate(0, 0, v * (player.turnSpeed * 3.0f) * Time.deltaTime); 
+                }
+                else
+                    player.transform.Rotate(0, 0, v * (player.turnSpeed * 5.0f) * Time.deltaTime); 
+            }
+            else { 
 
-        }
+                Vector2 vel = player.rbody.velocity.normalized;
+                theta = Mathf.Rad2Deg * Mathf.Acos((Vector2.Dot(Vector2.right, vel)));
+
+                if (player.rbody.velocity.y < 0)
+                    player.transform.rotation = Quaternion.Euler(0, 0, -theta);
+                else
+                    player.transform.rotation = Quaternion.Euler(0, 0, theta);
+            }
+
+        } 
         
     }
     private float ClampAngle(float angle, float min, float max)
