@@ -9,6 +9,9 @@ public class Player : GameEntity {
 
     public GameObject splash, splash2, splash3, splash4, wake;
     public TrailRenderer trailRenderer;
+    public InspirationalMessager inspire;
+
+    private float wakeTimer;
 
     public enum PlayerAnimState { IDLE, SWIM, GLIDE, FALL }
     public enum PlayerState { UNDERWATER, AIRBORNE }
@@ -53,7 +56,7 @@ public class Player : GameEntity {
 	// Update is called once per frame
 	protected override void Update () {
 
-        Debug.Log(rbody.velocity);
+        Debug.Log(wakeTimer);
 
         if(playerState == PlayerState.UNDERWATER)
         {
@@ -95,6 +98,7 @@ public class Player : GameEntity {
 
         switch (playerState) {
             case (PlayerState.UNDERWATER):
+                wakeTimer = 0;
                 if (SwimOrGlide)
                     playerAnimState = PlayerAnimState.SWIM;
                 else
@@ -103,9 +107,15 @@ public class Player : GameEntity {
             case (PlayerState.AIRBORNE):
                 Vector3 wakePos = new Vector3(wakeCheck.position.x - 4.0f, wakeCheck.position.y, wakeCheck.position.z);
                 if (Physics2D.Linecast(new Vector3(transform.position.x, transform.position.y - 2.0f, transform.position.z), wakePos, 1 << LayerMask.NameToLayer("Water")))
-                    if(rbody.velocity.x > 20.0f && rbody.velocity.y < 2.5 && rbody.velocity.y > -2.5) {
-                        Destroy(GameObject.Instantiate(wake, wakeCheck.position, Quaternion.Euler(0, 0, 0)),0.5f);
+                {
+                    if (rbody.velocity.x > 20.0f && rbody.velocity.y < 2.5 && rbody.velocity.y > -2.5)
+                    {
+                        Destroy(GameObject.Instantiate(wake, wakeCheck.position, Quaternion.Euler(0, 0, 0)), 0.5f);
+                        wakeTimer += Time.deltaTime;
                     }
+                }
+                else
+                    wakeTimer = 0;
                 if (SwimOrGlide)
                     playerAnimState = PlayerAnimState.GLIDE;
                 else
@@ -125,7 +135,18 @@ public class Player : GameEntity {
             if (playerState == PlayerState.UNDERWATER)
                 moveSpeed = baseMoveSpeed;
         }
-        
+
+        //wake messages
+        if (wakeTimer > 2.0f)
+            inspire.WakeMessages(4);
+        else if (wakeTimer > 1.0f)
+            inspire.WakeMessages(3);
+        else if (wakeTimer > 0.5f)
+            inspire.WakeMessages(2);
+        else if (wakeTimer > 0.1f)
+            inspire.WakeMessages(1);
+        else if (wakeTimer > 0.05f)
+            inspire.WakeMessages(0);
         base.Update();
 	}
 
@@ -163,19 +184,20 @@ public class Player : GameEntity {
         if(impactAngle < 20.0f) {
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
             Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
+            inspire.BadDiveMessages();
         }
         else if(impactAngle >= 20.0f && impactAngle < 35.0f) {
              Destroy(GameObject.Instantiate(splash2, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
              rbody.velocity = heading.normalized * breechVelocity * 0.9f;
         }
         else if(impactAngle >= 35.0f && impactAngle < 75.0f) {
-          
             Destroy(GameObject.Instantiate(splash, transform.position, Quaternion.Euler(0, 0, impactAngle)), 3.0f);
-            heading.y -= 1.0f;
+            inspire.DiveMessages();
             rbody.velocity = heading.normalized * breechVelocity;
         }
         else {
             Destroy(GameObject.Instantiate(splash, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
+            inspire.GreatDiveMessages();
             rbody.velocity = heading.normalized * maxSpeed;
         }
     }
