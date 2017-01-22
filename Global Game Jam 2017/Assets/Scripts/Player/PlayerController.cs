@@ -14,7 +14,11 @@ public class PlayerController : MonoBehaviour {
     void Start () {
         
 	}
-	
+    private void FixedUpdate()
+    {
+
+    }
+    
 	// Update is called once per frame
 	void Update () {
          //Set the players heading toward the input
@@ -72,7 +76,6 @@ public class PlayerController : MonoBehaviour {
                 Vector2 lift = Vector3.Cross(new Vector3(0,0,1), new Vector3(player.heading.x, player.heading.y, 0));
 
                 float headingUpDot = Vector2.Dot(player.rbody.velocity.normalized, Vector2.up);
-                Debug.Log(headingUpDot);
                 player.breechVelocity -= (headingUpDot * 2.0f);
                 player.rbody.velocity = player.rbody.velocity.normalized * player.breechVelocity * 0.80f + (lift.normalized * player.breechVelocity * 0.05f);
                 player.rbody.AddForce(lift);

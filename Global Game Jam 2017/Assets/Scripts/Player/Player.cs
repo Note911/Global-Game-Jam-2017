@@ -38,6 +38,7 @@ public class Player : GameEntity {
 
     // Use this for initialization
     protected override void Start () {
+        
         base.Start();
         GenerateAnimationList();
         animator = new AnimationController2D(renderer, animationList);
@@ -147,7 +148,7 @@ public class Player : GameEntity {
         impactAngle *= Mathf.Rad2Deg;
         impactAngle -= 90.0f;
 
-        Debug.Log("Impact Angle: " + impactAngle);
+       // Debug.Log("Impact Angle: " + impactAngle);
 
         if(impactAngle < 20.0f) {
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * breechVelocity;
@@ -165,4 +166,6 @@ public class Player : GameEntity {
     private void Breech() {
         breechVelocity = rbody.velocity.magnitude;
     }
+
+    
 }
