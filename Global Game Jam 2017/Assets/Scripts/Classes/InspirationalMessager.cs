@@ -49,7 +49,14 @@ public class InspirationalMessager : MonoBehaviour {
         }
         Invoke("DisableText", 0.3f);
     }
-
+    public void CustomMessage(string _text, Color color, Vector2 pos)
+    {
+        textBox.transform.position = pos;
+        textBox.enabled = true;
+        textBox.color = color;
+        textBox.text = _text;
+        Invoke("DisableText", 0.5f);
+    }
     public void DiveMessages() {
         textBox.transform.position = anchor.position;
         textBox.enabled = true;

@@ -1,25 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
 
     public Player player;
-
+    private bool loopFlag;
     public string swimButton;
-
+    float timer;
     // Use this for initialization
     void Start () {
-        
-	}
-    private void FixedUpdate()
-    {
-
+        loopFlag = false;
+        timer = 0.0f;
     }
-    
+  
 	// Update is called once per frame
 	void Update () {
-         //Set the players heading toward the input
+        timer += Time.deltaTime;
+        if (loopFlag && timer > 1.0f)
+        {
+            player.inspire.CustomMessage("LOOP DA LOOP!", Color.yellow, Vector2.zero);
+
+            player.scoreManager.GetComponent<ScoreManager>().AddStaticScore(100);
+            player.scoreManager.GetComponent<ScoreManager>().AddMultiplier(1.0f);
+
+            loopFlag = false;
+            timer = 0;
+        }
+        //Set the players heading toward the input
         player.heading = new Vector2(Mathf.Cos(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * player.transform.rotation.eulerAngles.z));
         switch(player.playerState) {
             case (Player.PlayerState.AIRBORNE):
@@ -59,9 +67,10 @@ public class PlayerController : MonoBehaviour {
         else if(player.playerState == Player.PlayerState.AIRBORNE)
         {
             player.breechVelocity -= 1.0f * Time.deltaTime;
-            if(player.SwimOrGlide) {
+            Vector2 lift = Vector2.zero;
+            if (player.SwimOrGlide) {
             
-                Vector2 lift = Vector3.Cross(new Vector3(0,0,1), new Vector3(player.heading.x, player.heading.y, 0));
+                lift = Vector3.Cross(new Vector3(0,0,1), new Vector3(player.heading.x, player.heading.y, 0));
 
                 float headingUpDot = Vector2.Dot(player.rbody.velocity.normalized, Vector2.up);
                 player.breechVelocity -= (headingUpDot * 2.0f);
@@ -78,7 +87,10 @@ public class PlayerController : MonoBehaviour {
                 else
                     player.transform.rotation = Quaternion.Euler(0, 0, theta);
 
+            if (lift.y < 0)
+                loopFlag = true;
 
+            
         } 
         
     }
