@@ -41,7 +41,7 @@ public class InspirationalMessager : MonoBehaviour {
                 textBox.text = "Git Gud!";
                 break;
             case (2):
-                 textBox.text = "Bad!";
+                 textBox.text = "Just Bad!";
                 break;
             case (3):
                 textBox.text = "You Suck!";
@@ -57,16 +57,22 @@ public class InspirationalMessager : MonoBehaviour {
         int i = Random.Range(0, 4);
         switch (i) {
             case (0):
-                textBox.text = "Nice!";
+                textBox.text = "Not bad";
                 break;
             case (1):
-                textBox.text = "Good!";
+                textBox.text = "Ok!";
                 break;
             case (2):
-                 textBox.text = "Many Score!";
+                 textBox.text = "Think!";
                 break;
             case (3):
-                textBox.text = "Egg-Salad";
+                textBox.text = "Satasfactory.";
+                break;
+            case (4):
+                textBox.text = "Participation!";
+                break;
+            case (5):
+                textBox.text = "C-";
                 break;
         }
         Invoke("DisableText", 0.3f);
@@ -82,10 +88,10 @@ public class InspirationalMessager : MonoBehaviour {
                 textBox.text = "Sexy!";
                 break;
             case (1):
-                textBox.text = "Thick!";
+                textBox.text = "Many Score!";
                 break;
             case (2):
-                 textBox.text = "Perfect!";
+                 textBox.text = "Egg-Salad";
                 break;
             case (3):
                 textBox.text = "Massive!";
@@ -95,6 +101,12 @@ public class InspirationalMessager : MonoBehaviour {
                 break;
             case (5):
                 textBox.text = "So Skill!";
+                break;
+            case (6):
+                textBox.text = "Thick!";
+                break;
+            case (7):
+                textBox.text = "Perfect!";
                 break;
         }
         Invoke("DisableText", 0.3f);
