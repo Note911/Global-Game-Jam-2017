@@ -45,6 +45,7 @@ public class Player : GameEntity {
 
     // Use this for initialization
     protected override void Start () {
+        
         base.Start();
         GenerateAnimationList();
         animator = new AnimationController2D(renderer, animationList);
@@ -180,6 +181,10 @@ public class Player : GameEntity {
         impactAngle *= Mathf.Rad2Deg;
         impactAngle -= 90.0f;
 
+<<<<<<< HEAD
+=======
+       // Debug.Log("Impact Angle: " + impactAngle);
+>>>>>>> refs/remotes/origin/Topher-Branch-Development
 
         if(impactAngle < 20.0f) {
             rbody.velocity = new Vector2(rbody.velocity.x, Mathf.Abs(rbody.velocity.y)).normalized * (breechVelocity * 0.8f);
@@ -211,4 +216,6 @@ public class Player : GameEntity {
             Destroy(GameObject.Instantiate(splash3, transform.position, Quaternion.Euler(0, 0, 0)), 3.0f);
         breechVelocity = rbody.velocity.magnitude;
     }
+
+    
 }

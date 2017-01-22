@@ -54,10 +54,10 @@ public class WaveController : MonoBehaviour {
         }
         //Wrap the waves around the screen
         for (int i = 0;  i < waveSections.Length; ++i) {
-            if(waveSections[i].transform.position.x < cameraRef.ScreenToWorldPoint(Vector3.zero).x - 10.0f) {
+            if(waveSections[i].transform.position.x < cameraRef.ScreenToWorldPoint(Vector3.zero).x - 18.0f) {
                 waveSections[i].transform.position = new Vector3(waveSections[i].transform.position.x + totalLength, waveSections[i].transform.position.y, waveSections[i].transform.position.z);
             }
-            else if(waveSections[i].transform.position.x > cameraRef.ScreenToWorldPoint(new Vector3(cameraRef.pixelWidth,0,0)).x + 10.0f) {
+            else if(waveSections[i].transform.position.x > cameraRef.ScreenToWorldPoint(new Vector3(cameraRef.pixelWidth,0,0)).x + 18.0f) {
                 waveSections[i].transform.position = new Vector3(waveSections[i].transform.position.x - totalLength, waveSections[i].transform.position.y, waveSections[i].transform.position.z);
             }
         } 
