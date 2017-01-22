@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Classes\WaveController.cs" />
     <Compile Include="Assets\Scripts\Effects\Parallax.cs" />
     <Compile Include="Assets\Scripts\GUI\Menus\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\GUI\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\GUI\StaminaBar.cs" />
     <Compile Include="Assets\Scripts\Loaders\ContentLoader.cs" />
     <Compile Include="Assets\Scripts\Managers\AnimationManager.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\TempSprite.cs" />
+    <Compile Include="Assets\Scripts\Tools\BackgroundImageFollow.cs" />
     <Compile Include="Assets\Scripts\Tools\GameControl.cs" />
     <Compile Include="Assets\Scripts\Tools\Tile Map\Cell.cs" />
     <Compile Include="Assets\Scripts\Tools\Tile Map\Tile.cs" />

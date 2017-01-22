@@ -23,9 +23,9 @@ public class WaveController : MonoBehaviour {
     void Start ()
     {
         count += xOffset;
-        waveSections = new GameObject[size*2];
+        waveSections = new GameObject[size*3];
         waveSize = 18.0f / size;
-        for (int i = 0; i < size*2; i++)
+        for (int i = 0; i < size*3; i++)
         {
             waveSections[i] = Instantiate(wave);
             waveSections[i].name = "Wave" + i;
@@ -45,7 +45,7 @@ public class WaveController : MonoBehaviour {
             amp = maxAmp;
         count += Time.deltaTime;
         float totalLength = 0;
-        for (int i = 0; i < size*2; i++)
+        for (int i = 0; i < size*3; i++)
         {
             totalLength += waveSize;
             Vector2 offset = new Vector2(waveSections[i].transform.position.x, (amp * Mathf.Sin((freq * waveSections[i].transform.position.x) + count) - /*offsets the waves down*/ yOffset));
