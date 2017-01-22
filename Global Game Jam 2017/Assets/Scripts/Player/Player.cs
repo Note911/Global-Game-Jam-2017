@@ -51,6 +51,9 @@ public class Player : GameEntity {
         {
             rbody.AddForce(heading * moveSpeed);
         }
+
+        if (stamina == 0.0f)
+            SwimOrGlide = false;
         //speed limit
         if (SwimOrGlide) {
             if (Mathf.Abs(rbody.velocity.x) > maxSpeed * 1.5f && playerState == PlayerState.UNDERWATER)
@@ -58,8 +61,8 @@ public class Player : GameEntity {
                 rbody.velocity = new Vector2(maxSpeed * 1.5f, rbody.velocity.y);
             }
 
-            if(stamina > 0)
-                stamina -= decayRate * Time.deltaTime;
+            stamina -= decayRate * Time.deltaTime;
+            Mathf.Clamp(stamina, 0.0f, maxStamina);
         }
         else if(!SwimOrGlide && playerState == PlayerState.UNDERWATER)
         {

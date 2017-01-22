@@ -17,7 +17,7 @@ public class CameraFollow : MonoBehaviour {
     private float initZoom;         // The initial size the camera has.
     public bool bindToScreen = false;       // If true restricts all follow targets to the screens bounds 
 
-    public List<Transform> players;		// Reference to the player's transform.
+    public Player player;		// Reference to the player's transform.
     private Camera camera;              // Reference to this camera object
 
 
@@ -85,15 +85,13 @@ public class CameraFollow : MonoBehaviour {
         Transform min = transform;
         Transform max = transform;
 
-        foreach (Transform player in players) {
             //Find min max positions of players for camera zoom
-            if (player.position.x > max.position.x)
-                max = player;
-            if (player.position.x < min.position.x)
-                min = player;
+            if (player.transform.position.x > max.position.x)
+                max = player.transform;
+            if (player.transform.position.x < min.position.x)
+                min = player.transform;
             
             
-        }
         //    //Make sure players arnt fighting over the camera
         //    if (!CheckXMargin(min, xMargin) || !CheckXMargin(max, xMargin)) {
         //        // If the player has moved beyond the x margin...
@@ -111,27 +109,24 @@ public class CameraFollow : MonoBehaviour {
         Vector2 targetPos = Vector2.zero;
         int count = 0;
 
-        foreach (Transform player in players) {
-            Vector2 position = camera.WorldToScreenPoint(player.position);
-            if (position.x <= camera.pixelWidth + 1000 && position.x >= -1000 && position.y <= camera.pixelHeight +1000 && position.y >= -1000) {
-                targetPos.x += player.position.x;
-                targetPos.y += player.position.y;
-                count++;
-            }
-            //Bind to Screen
-            if(bindToScreen) {
-                if (position.x <= 0)
-                    position.x = 0;
-                else if (position.x >= camera.pixelWidth)
-                    position.x = camera.pixelWidth;
-                if (position.y <= 15)
-                    position.y = 15;
-                else if (position.y >= camera.pixelHeight)
-                    position.y = camera.pixelHeight;
+        Vector2 position = camera.WorldToScreenPoint(player.transform.position);
+        if (position.x <= camera.pixelWidth + 1000 && position.x >= -1000 && position.y <= camera.pixelHeight +1000 && position.y >= -1000) {
+            targetPos.x += player.transform.position.x;
+            targetPos.y += player.transform.position.y;
+            count++;
+        }
+        //Bind to Screen
+        if(bindToScreen) {
+            if (position.x <= 0)
+                position.x = 0;
+            else if (position.x >= camera.pixelWidth)
+                position.x = camera.pixelWidth;
+            if (position.y <= 15)
+                position.y = 15;
+            else if (position.y >= camera.pixelHeight)
+                position.y = camera.pixelHeight;
                 
-                player.transform.position = new Vector3(camera.ScreenToWorldPoint(position).x,camera.ScreenToWorldPoint(position).y,0);
-            }
-          
+            player.transform.position = new Vector3(camera.ScreenToWorldPoint(position).x,camera.ScreenToWorldPoint(position).y,0);
         }
         targetPos.x /= count;
         targetPos.y /= count;
@@ -140,11 +135,11 @@ public class CameraFollow : MonoBehaviour {
         targetY = Mathf.Lerp(transform.position.y, targetPos.y, ySmooth * Time.deltaTime);
         
         //If both the min and max players are past the camera margin...
-        if (CheckXMargin(min, xMargin) && CheckXMargin(max, xMargin))
+        if (player.transform.position.x > 15 && player.rbody.velocity.y > 0)
             //Start zooming out
             targetZoom = Mathf.Lerp(camera.orthographicSize, maxZoom, zSmooth * Time.deltaTime);
         //If no players past the zoom in margin...
-        else if (!CheckXMargin(min, zoomInMargin) && !CheckXMargin(max, zoomInMargin))
+        else if(player.rbody.velocity.y < 0)
             //Start zooming in
             targetZoom = Mathf.Lerp(camera.orthographicSize, initZoom, zSmooth * Time.deltaTime);
         

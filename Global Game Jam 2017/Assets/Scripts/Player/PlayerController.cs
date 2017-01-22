@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
                 //Set gravity scale to full
                 player.rbody.gravityScale = 1.0f;
                 //Flag the player to swim faster if button is pressed
-                if (Input.GetButtonDown(swimButton))
+                if (Input.GetButton(swimButton)&& player.stamina > 0)
                     player.SwimOrGlide = true;
                 if (Input.GetButtonUp(swimButton))
                     player.SwimOrGlide = false;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
                     player.heading.Normalize();
 
                 //Flag the player to swim faster if button is pressed
-                if (Input.GetButtonDown(swimButton) && player.stamina > 0)
+                if (Input.GetButton(swimButton) && player.stamina > 0)
                     player.SwimOrGlide = true;
                 if (Input.GetButtonUp(swimButton))
                     player.SwimOrGlide = false;
@@ -59,38 +59,27 @@ public class PlayerController : MonoBehaviour {
             float angle = player.transform.eulerAngles.z;//deg;
             //player.transform.eulerAngles = new Vector3(0, 0, ClampAngle(angle, -85, 85));
 
-            if (v == 0){
+            if (v == 0)
                 player.transform.Rotate(0, 0, (player.turnSpeed * 0.5f) * Time.deltaTime);
-            }
 
            
         }
         else if(player.playerState == Player.PlayerState.AIRBORNE)
         {
-            player.breechVelocity -= 0.1f * Time.deltaTime;
-            Mathf.Clamp(player.breechVelocity, 0.0f, player.breechVelocity);
-            if(v != 0 && player.SwimOrGlide) {
-                //Get the angle between the right vector and the heading
-                float headingAngle = Mathf.Rad2Deg * Mathf.Acos(Vector2.Dot(player.heading.normalized, Vector2.right));
-                        
-                if(headingAngle < 90.0f) {
-                    float liftPercentage = 1.0f - (headingAngle / 90.0f);
-                    player.transform.Rotate(0, 0, v * (player.turnSpeed) * Time.deltaTime);             
-                    player.rbody.velocity = player.heading.normalized * (player.breechVelocity * liftPercentage);
+            player.breechVelocity -= 1.0f * Time.deltaTime;
+            if(player.SwimOrGlide) {
+            
+                Vector2 lift = Vector3.Cross(new Vector3(0,0,1), new Vector3(player.heading.x, player.heading.y, 0));
 
-                    Vector2 lift = Vector2.up * player.glideUpForce * liftPercentage;
-                    Debug.Log(player.rbody.velocity.magnitude);
-                    Debug.Log(player.rbody.velocity);
-                    player.rbody.AddForce(lift);
-                }
-                else if(headingAngle > 90.0f && headingAngle < 270){
-                    player.transform.Rotate(0, 0, v * (player.turnSpeed * 3.0f) * Time.deltaTime); 
-                }
-                else
-                    player.transform.Rotate(0, 0, v * (player.turnSpeed * 5.0f) * Time.deltaTime); 
+                float headingUpDot = Vector2.Dot(player.rbody.velocity.normalized, Vector2.up);
+                Debug.Log(headingUpDot);
+                player.breechVelocity -= (headingUpDot * 2.0f);
+                player.rbody.velocity = player.rbody.velocity.normalized * player.breechVelocity * 0.80f + (lift.normalized * player.breechVelocity * 0.05f);
+                player.rbody.AddForce(lift);
+        
             }
-            else { 
-
+            if(v == 0) {
+                
                 Vector2 vel = player.rbody.velocity.normalized;
                 theta = Mathf.Rad2Deg * Mathf.Acos((Vector2.Dot(Vector2.right, vel)));
 
@@ -98,6 +87,7 @@ public class PlayerController : MonoBehaviour {
                     player.transform.rotation = Quaternion.Euler(0, 0, -theta);
                 else
                     player.transform.rotation = Quaternion.Euler(0, 0, theta);
+
             }
 
         } 
