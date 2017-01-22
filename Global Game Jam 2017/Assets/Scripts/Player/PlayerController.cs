@@ -7,9 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Player player;
 
     public string swimButton;
-    public string verticalAxis;
 
-    
     // Use this for initialization
     void Start () {
         
@@ -48,23 +46,13 @@ public class PlayerController : MonoBehaviour {
                     player.SwimOrGlide = false;
             break;
         }
-        //Get the horizontal and verticle axis input
-        float v = 0;
-        v = Input.GetAxis(verticalAxis);
         float theta = 0;
         if (player.playerState == Player.PlayerState.UNDERWATER)
         {
             //Redirect the momentum based on heading
             player.rbody.velocity = player.heading.normalized * player.rbody.velocity.magnitude;
 
-           
-            player.transform.Rotate(0, 0, v * player.turnSpeed * Time.deltaTime);
-
-            float angle = player.transform.eulerAngles.z;//deg;
-            //player.transform.eulerAngles = new Vector3(0, 0, ClampAngle(angle, -85, 85));
-
-            if (v == 0)
-                player.transform.Rotate(0, 0, (player.turnSpeed * 0.5f) * Time.deltaTime);
+            player.transform.Rotate(0, 0, (player.turnSpeed * 0.5f) * Time.deltaTime);
 
            
         }
@@ -81,7 +69,6 @@ public class PlayerController : MonoBehaviour {
                 player.rbody.AddForce(lift);
         
             }
-            if(v == 0) {
                 
                 Vector2 vel = player.rbody.velocity.normalized;
                 theta = Mathf.Rad2Deg * Mathf.Acos((Vector2.Dot(Vector2.right, vel)));
@@ -91,32 +78,8 @@ public class PlayerController : MonoBehaviour {
                 else
                     player.transform.rotation = Quaternion.Euler(0, 0, theta);
 
-            }
 
         } 
         
-    }
-    private float ClampAngle(float angle, float min, float max)
-    {
-        
-        if (angle < 90f || angle > 270f)
-        {
-            if (angle > 180)
-                angle -= 360f;
-            if (max > 180)
-                max -= 360f;
-            if (min > 180)
-                min -= 360f;
-
-        }
-        angle = Mathf.Clamp(angle, min, max);
-        if (angle < 0)
-        {
-            
-            angle += 360f;
-            
-        }
-        
-        return angle;
     }
 }
