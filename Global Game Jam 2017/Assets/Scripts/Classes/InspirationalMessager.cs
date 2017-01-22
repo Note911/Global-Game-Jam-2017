@@ -66,6 +66,7 @@ public class InspirationalMessager : MonoBehaviour {
                  textBox.text = "Think!";
                 break;
             case (3):
+<<<<<<< HEAD
                 textBox.text = "Satasfactory.";
                 break;
             case (4):
@@ -73,6 +74,9 @@ public class InspirationalMessager : MonoBehaviour {
                 break;
             case (5):
                 textBox.text = "C-";
+=======
+                textBox.text = "So Skill.";
+>>>>>>> refs/remotes/origin/Development
                 break;
         }
         Invoke("DisableText", 0.3f);
@@ -100,7 +104,7 @@ public class InspirationalMessager : MonoBehaviour {
                 textBox.text = "Dank!";
                 break;
             case (5):
-                textBox.text = "So Skill!";
+                textBox.text = "Egg-Salad!";
                 break;
             case (6):
                 textBox.text = "Thick!";

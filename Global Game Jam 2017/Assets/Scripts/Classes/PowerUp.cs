@@ -5,10 +5,9 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour {
 
     public Player player;
-
 	// Use this for initialization
 	void Start () {
-		
+        transform.position = new Vector3(transform.position.x, transform.position.y, 10);
 	}
 	
 	// Update is called once per frame
@@ -17,9 +16,11 @@ public class PowerUp : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D other) {
-        player.stamina += 5;
+        player.stamina ++;
         if (player.stamina > 100.0f)
             player.stamina = 100.0f;
-        Destroy(gameObject);
+        GetComponent<ParticleSystem>().Play();
+        Destroy(gameObject,0.3f);
     }
+
 }

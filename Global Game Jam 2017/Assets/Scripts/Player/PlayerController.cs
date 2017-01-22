@@ -12,7 +12,11 @@ public class PlayerController : MonoBehaviour {
     void Start () {
         
 	}
-	
+    private void FixedUpdate()
+    {
+
+    }
+    
 	// Update is called once per frame
 	void Update () {
          //Set the players heading toward the input
