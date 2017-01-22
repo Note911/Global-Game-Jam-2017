@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour {
         loader.LoadContent();
         if (loader.HasLoaded()) {
             Destroy(loader.gameObject);
-            EditorSceneManager.LoadScene("MainMenu");
+            EditorSceneManager.LoadScene("GlobalGameJamSplash");
         }
     }
 	
