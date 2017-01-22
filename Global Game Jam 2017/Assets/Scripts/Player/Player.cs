@@ -41,7 +41,6 @@ public class Player : GameEntity {
 	
 	// Update is called once per frame
 	protected override void Update () {
-        Debug.Log(rbody.velocity);
         if(playerState == PlayerState.UNDERWATER)
         {
             rbody.AddForce(heading * moveSpeed);
@@ -71,7 +70,9 @@ public class Player : GameEntity {
         {
             //Before we change the state to underwater lets check if the player was airborne last frame
             if (playerState == PlayerState.AIRBORNE)
+            {
                 rbody.velocity *= 0.2f;
+            }
             playerState = PlayerState.UNDERWATER;
         }
         else
